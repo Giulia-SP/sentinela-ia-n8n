@@ -1,0 +1,264 @@
+{
+  "name": "sentinela-ia-n8n",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "48796563-b766-40ac-840e-75ff6930333d",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "14mw4GXr0FimsPfzqneZ8JORC-Uz8lvAVxROS_-gxbCQ",
+          "mode": "list",
+          "cachedResultName": "Sentinela_UniFECAF",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14mw4GXr0FimsPfzqneZ8JORC-Uz8lvAVxROS_-gxbCQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 119415167,
+          "mode": "list",
+          "cachedResultName": "Resultado",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14mw4GXr0FimsPfzqneZ8JORC-Uz8lvAVxROS_-gxbCQ/edit#gid=119415167"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        0
+      ],
+      "id": "dd376cf0-03e8-4295-bfdc-3187bd0f6e8a",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vJZiyHfwHWkJv5z5",
+          "name": "Google Sheets account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Atue como Analista de IA. Analise o feedback abaixo e retorne APENAS um JSON.\n\nFeedback: {{ $json.Feedback }}\n\nFormato de Saída (JSON):\n{\n\"sentimento\": \"Positivo, Neutro ou Negativo\",\n\"justificativa\": \"Explique em uma frase curta\",\n\"acao\": \"Sugestão de ação prática\"\n}\n\"Responda APENAS o JSON. Não use marcações como ```json ou texto explicativo.\""
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        0
+      ],
+      "id": "eb2d6edd-aebc-4e2b-858a-78f0f1450ccb",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "sShFCRyclhBP8k1g",
+          "name": "Google Gemini(PaLM) Api account 8"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "14mw4GXr0FimsPfzqneZ8JORC-Uz8lvAVxROS_-gxbCQ",
+          "mode": "list",
+          "cachedResultName": "Sentinela_UniFECAF",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14mw4GXr0FimsPfzqneZ8JORC-Uz8lvAVxROS_-gxbCQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 119415167,
+          "mode": "list",
+          "cachedResultName": "Resultado",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14mw4GXr0FimsPfzqneZ8JORC-Uz8lvAVxROS_-gxbCQ/edit#gid=119415167"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Get row(s) in sheet').item.json.ID }}",
+            "Sentimento": "={{ JSON.parse($node[\"Message a model\"].json.content.parts[0].text).sentimento }}",
+            "Justificativa": "={{ JSON.parse($node[\"Message a model\"].json.content.parts[0].text).justificativa }}",
+            "Proxima_Acao": "={{ JSON.parse($node[\"Message a model\"].json.content.parts[0].text).acao }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Feedback",
+              "displayName": "Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Sentimento",
+              "displayName": "Sentimento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Justificativa",
+              "displayName": "Justificativa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Proxima_Acao",
+              "displayName": "Proxima_Acao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        960,
+        0
+      ],
+      "id": "8eabe0cf-1475-4284-90b3-dda2d1e86f21",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "xQy4i3dCt6SL5U1l",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        736,
+        0
+      ],
+      "id": "1062f131-58c4-4d34-8b25-18de029c9f1f",
+      "name": "Wait",
+      "webhookId": "757bf2c0-86f1-4eee-8435-263f0c75ed67"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "27265994-c89e-4b2d-8a97-8f80a58b21e5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e8f8da5e4885f333cbeff62701ac2d89ed978dfd846a6ecff1a23fc5a4e2e3cb"
+  },
+  "id": "SeprEF1DjJ8VRQ5Q",
+  "tags": []
+}
