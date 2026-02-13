@@ -32,11 +32,14 @@ Formato de Saída (JSON):
 "Responda APENAS o JSON. Não use marcações como ```json ou texto explicativo."
 
 Anexos: 
+Legenda: Arquitetura do pipeline de dados desenvolvido. O fluxo contempla a extração (Google Sheets), inteligência (Gemini API), tratamento de erros (Wait/Delay) e transformação de dados (JavaScript/Code Node).
+<img width="1847" height="815" alt="image" src="https://github.com/user-attachments/assets/cc2e31c2-c7c4-4156-85a3-ae3906df9163" />
 
-<img width="1808" height="299" alt="image" src="https://github.com/user-attachments/assets/96173fee-b88a-4af2-84bd-3e18a61f56a1" />
+Legenda: Visualização final do Banco de Dados após o processamento da IA. As colunas de Sentimento, Justificativa e Ação foram populadas automaticamente via integração n8n + Gemini.
 <img width="1812" height="422" alt="image" src="https://github.com/user-attachments/assets/f06569ef-378b-41dc-9446-5f5489438aa2" />
 
-Planilha após intervenção manual para garantir a continuidade do serviço (SLA) durante instabilidade de API externa.
+Legenda: Planilha após intervenção manual para garantir a continuidade do serviço (SLA) durante instabilidade de API externa.
 <img width="1822" height="357" alt="image" src="https://github.com/user-attachments/assets/e4f7e172-31af-41a4-a260-ef4eb50a4cdf" />
+
 
 
