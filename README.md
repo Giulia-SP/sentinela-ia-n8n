@@ -17,12 +17,26 @@ Tratamento de Dados: Implementação de script em JS para fazer o parsing de res
 
 Resiliência e Escalabilidade: Configuração de nós de Wait e gestão de Rate Limiting da API.
 
-
 Gestão de Incidentes: Intervenção manual para garantir a continuidade do serviço (SLA) durante instabilidade de API externa.
+
+Prompt usado no nó da IA escolhida no n8n (Gemini):
+
+Atue como Analista de IA. Analise o feedback abaixo e retorne APENAS um JSON.
+Feedback: {{ $json.Feedback }}
+Formato de Saída (JSON):
+{
+"sentimento": "Positivo, Neutro ou Negativo",
+"justificativa": "Explique em uma frase curta",
+"acao": "Sugestão de ação prática"
+}
+"Responda APENAS o JSON. Não use marcações como ```json ou texto explicativo."
 
 Anexos: 
 
 <img width="1808" height="299" alt="image" src="https://github.com/user-attachments/assets/96173fee-b88a-4af2-84bd-3e18a61f56a1" />
+<img width="1812" height="422" alt="image" src="https://github.com/user-attachments/assets/f06569ef-378b-41dc-9446-5f5489438aa2" />
 
-<img width="1857" height="803" alt="image" src="https://github.com/user-attachments/assets/6f7645a7-450f-42b9-b860-f4760b58b704" />
+Planilha após intervenção manual para garantir a continuidade do serviço (SLA) durante instabilidade de API externa.
+<img width="1822" height="357" alt="image" src="https://github.com/user-attachments/assets/e4f7e172-31af-41a4-a260-ef4eb50a4cdf" />
+
 
